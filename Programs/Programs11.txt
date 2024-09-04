@@ -1,0 +1,81 @@
+
+//ZOMBIE
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/types.h>
+
+void main()
+{
+	pid_t child_pid,parent_pid,my_pid;
+	child_pid=fork();
+	if(child_pid<0)
+	{
+		printf("Error!!");
+		exit(1);
+	}
+	if(child_pid==0)
+	{	
+		printf("[Child] This is Child process\n");
+		my_pid=getpid();
+		parent_pid=getppid();
+		printf("[Child] My procces ID is : %d\n",my_pid);
+		printf("[Child] My parent procces ID is : %d\n",parent_pid);
+		printf("Exiting\n");
+		exit(0);
+	}
+	else
+	{
+		printf("[Parent] This is parent process\n");
+		my_pid=getpid();
+		parent_pid=getppid();
+		printf("[Parent] My procces ID is : %d\n",my_pid);
+		printf("[Parent] My parent procces ID is : %d\n",parent_pid);
+		printf("Sleeping for 10 seconds\n");
+		sleep(10);
+		printf("Child process %d terminated",child_pid);
+		printf(",but still has an entry in process table.Thus it is a zombie process\n");
+	}
+}		
+
+//ORPHAN
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/types.h>
+
+void main()
+{
+	pid_t child_pid,parent_pid,my_pid;
+	child_pid=fork();
+	if(child_pid<0)
+	{
+		printf("Error!!");
+		exit(1);
+	}
+	if(child_pid==0)
+	{	
+		printf("[Child] This is Child process\n");
+		my_pid=getpid();
+		parent_pid=getppid();
+		printf("[Child] My procces ID is : %d\n",my_pid);
+		printf("[Child] My parent procces ID is : %d\n",parent_pid);
+		printf("Sleeping for 10 seconds\n");
+		sleep(10);
+		printf("\nParent process %d terminated\n",parent_pid);
+		printf("[CHILD]Thus i am an orphan process adapted by init process\n");
+		
+	}
+	else
+	{
+		printf("[Parent] This is parent process\n");
+		my_pid=getpid();
+		parent_pid=getppid();
+		printf("[Parent] My procces ID is : %d\n",my_pid);
+		printf("[Parent] My parent procces ID is : %d\n",parent_pid);
+		printf("Exiting\n");
+		exit(0);	
+	}
+}	

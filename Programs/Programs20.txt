@@ -1,0 +1,111 @@
+
+//Parent
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<string.h>
+#include<sys/mman.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<sys/stat.h>
+
+int main(int argc,char *argv[])
+{
+	pid_t pid;
+	void *ptr;
+	int i,shmid;
+	if(argc<3)
+	{
+		printf("Insufficient parameter passed!!!");
+		exit(0);
+	}
+	if(argv[1]==NULL&&argv[2]==NULL)
+	{
+		printf("Invalid!!!");
+		exit(0);
+	}
+	
+	
+	pid=fork();
+	if(pid<0)
+	{
+		printf("Process not created!\n");
+		exit(0);
+	}
+	if(pid==0)
+	{
+		execlp("./prime","prime",argv[1],argv[2],NULL);
+	}
+	else
+	{
+		
+		wait(NULL);
+		shmid=shm_open("NAME2",O_RDONLY,0666);
+		ptr=mmap(0,1024,PROT_READ,MAP_SHARED,shmid,0);
+		printf("Parent printing: \n");
+		printf("%s",(char*)ptr);
+		shm_unlink("NAME2");
+	}
+	return 0;
+}
+
+//Child
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<string.h>
+#include<sys/mman.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<sys/stat.h>
+
+int main(int argc,char *argv[])
+{
+	pid_t pid;
+	void *ptr;
+	int i,j,shmid,n1,n2,flag;
+	if(argc<3)
+	{
+		printf("Insufficient parameter passed!!!");
+		exit(0);
+	}
+	if(argv[1]==NULL&&argv[2]==NULL)
+	{
+		printf("Invalid!!!");
+		exit(0);
+	}
+	n1=atoi(argv[1]);
+	n2=atoi(argv[2]);
+	
+	shmid=shm_open("NAME2",O_CREAT|O_RDWR,0666);
+	ftruncate(shmid,1024);
+	ptr=mmap(0,1024,PROT_WRITE,MAP_SHARED,shmid,0);
+	
+	printf("Child printing:\n");
+	for(i=n1;i<=n2;i++)
+	{
+		flag=0;
+		for(j=2;j<=i/2;j++)
+		{
+			if(i%j==0)
+			{
+				flag=1;
+				break;
+			}
+			
+		}
+		if(flag==0&&i!=1)
+		{
+			sprintf(ptr,"%d ",i);
+			ptr+=strlen(ptr);
+			printf("%d ",i);
+		}	
+	}
+	printf("\n");
+	return 0;
+}
+

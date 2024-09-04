@@ -1,0 +1,21 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+void main()
+{
+	FILE *fp;
+	char pattern[100],temp[100],file[10];
+	printf("Enter the file to search: ");
+	scanf("%s",file);
+	printf("Enter the pattern: ");
+	scanf("%s",pattern);
+	fp=fopen(file,"r");
+	while(!feof(fp))
+	{
+		fgets(temp,100,fp);
+		if(strstr(temp,pattern))
+			printf("%s",temp);
+	}
+	fclose(fp);
+}

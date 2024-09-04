@@ -1,0 +1,76 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-color: rgb(39, 39, 39);
+}
+
+header{
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+}
+header h4{
+    color: white;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color: grey;
+    margin: auto;
+}
+.accordion-body {
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    background-color: rgb(58, 58, 58);
+}
+
+.accordion {
+    padding: 10px 20px 0px 20px;
+    background-color: rgb(39, 39, 39) !important;
+}
+
+.accordion-item {
+    padding-top: 10px;
+    background-color: rgb(39, 39, 39) !important;
+}
+.accordion-collapse{
+    position: relative;
+}
+.copy{
+    color: black;
+    background-color: #d6d6d6;
+    width: 60px;
+    height: 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    position:absolute;
+    right: 0;
+    margin: 10px;
+}
+
+.accordion-button{
+    font-weight: bolder;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 10px 10px 0px 0px !important;
+}
+.copy:active{
+    transform: scale(0.9);
+}
+.download{
+    position: absolute;
+    right: 1vw;
+    text-decoration: none;
+    background-color: rgb(193, 193, 193);
+    color: black;
+    font-weight: 700;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 3px;
+}
+.download:active{
+    transform: scale(0.9);
+}
+.download:hover{
+    background-color: rgb(243, 243, 243);
+}

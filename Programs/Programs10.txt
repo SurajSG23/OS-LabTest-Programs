@@ -1,0 +1,88 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct process
+{
+	int id,AT,BT,WT,TAT,CT,RT;
+}Process;
+
+void fcfs(Process pro[],int n)
+{
+	int elapsedTime=0;
+	int totalTAT=0;
+	int totalWT=0;
+	int totalRT=0;
+	int temp;
+	float avgTAT=0;
+	float avgWT=0;
+	float avgRT=0;
+	printf("\nGhantt chart: \n");
+	for(int i=0;i<n;i++)
+	{
+		if(pro[i].AT>elapsedTime)
+			elapsedTime=pro[i].AT;
+		 
+		temp=elapsedTime;
+		pro[i].RT=elapsedTime-pro[i].AT; 
+		elapsedTime+=pro[i].BT;
+		pro[i].CT=elapsedTime;
+		pro[i].TAT=pro[i].CT-pro[i].AT;
+		pro[i].WT=pro[i].TAT-pro[i].BT;
+		
+		printf("| (%d) P%d (%d) ",temp,pro[i].id,elapsedTime);
+	}
+	printf("|\n");
+	printf("Observation Table: \n");
+	printf("ID\tAT\tBT\tCT\tTAT\tWT\tRT\n");
+	for(int i=0;i<n;i++)
+	{
+		printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",pro[i].id,pro[i].AT,pro[i].BT,pro[i].CT,pro[i].TAT,pro[i].WT,
+		pro[i].RT);
+		
+		totalWT+=pro[i].WT;
+		totalTAT+=pro[i].TAT;
+		totalRT+=pro[i].RT;
+	}
+	avgWT=(float)totalWT/n;
+	avgTAT=(float)totalTAT/n;
+	avgRT=(float)totalRT/n;
+	
+	printf("Average turn around time: %.2lf\n",avgTAT);
+	printf("Average waiting time: %.2lf\n",avgWT);
+	printf("Average response time: %.2lf\n",avgRT);
+}
+
+
+int main()
+{
+	int n;		
+	printf("Enter the number of processes: ");
+	scanf("%d",&n);
+	Process pro[n];
+	for(int i=0;i<n;i++)
+	{
+		printf("Process no. %d\n",i+1);
+		printf("Enter its arrival time: ");
+		scanf("%d",&pro[i].AT);
+		printf("Enter its burst time: ");
+		scanf("%d",&pro[i].BT);
+		pro[i].id=i+1;
+		printf("\n");
+	}
+	//Arranging in ascending order
+	
+	for(int i=0;i<n-1;i++)
+	{
+		for(int j=0;j<n-i-1;j++)
+		{
+			if(pro[j].AT>pro[j+1].AT)
+			{
+				Process temp=pro[j];
+				pro[j]=pro[j+1];
+				pro[j+1]=temp;
+			}
+		}
+	}
+	fcfs(pro,n);
+	return 0;
+}

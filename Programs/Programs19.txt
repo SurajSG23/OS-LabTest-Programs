@@ -1,0 +1,52 @@
+
+//cat view only
+
+#include<stdio.h>
+#include<stdlib.h>
+
+void main(int argc,char *argv[])
+{
+	FILE *fp;
+	char ch;	
+	if(argc<2)
+	{
+		printf("Insufficient input");
+		exit(1);
+	}
+	if(argv[1]==NULL)
+	{
+		printf("Invalid!!!");
+		exit(0);
+	}
+	fp=fopen(argv[1],"r");
+	while((ch=fgetc(fp))!=EOF)
+		printf("%c",ch);
+	fclose(fp);
+}		
+
+//cat to concatinate
+
+#include<stdio.h>
+#include<stdlib.h>
+void main(int argc,char *argv[])
+{
+	FILE *fp1,*fp2;
+	char ch;	
+	if(argc<3)
+	{
+		printf("Insufficient input");
+		exit(1);
+	}
+	fp1=fopen(argv[1],"a");
+	fp2=fopen(argv[2],"r");
+	if(argv[2]==NULL)
+	{
+		printf("Invalid!!!");
+		exit(0);
+	}
+	while((ch=fgetc(fp2))!=EOF)
+		fprintf(fp1,"%c",ch);
+	fclose(fp1);
+	fclose(fp2);
+}		
+

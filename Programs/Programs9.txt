@@ -1,0 +1,36 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<sys/types.h>
+void main()
+{
+	int fd;
+	fd=open("myFile.txt",O_RDWR);
+	char buffer[30];
+	if(fd<0)
+	{
+		printf("File not found\n");
+		exit(0);
+	}
+	
+	printf("Reading first 10 characters\n");
+	read(fd,buffer,10);
+	write(1,buffer,10);
+	
+	printf("\nSkipping first 5 characters from the current position\n");
+	lseek(fd,5,SEEK_CUR);
+	read(fd,buffer,10);
+	write(1,buffer,10);
+	
+	printf("\nGoing to last 5th characters from the end\n");
+	lseek(fd,-5,SEEK_END);
+	read(fd,buffer,5);
+	write(1,buffer,5);
+	
+	printf("\nSkipping fist 3 characters from the starting position\n");
+	lseek(fd,3,SEEK_SET);
+	read(fd,buffer,10);
+	write(1,buffer,10);
+} 
