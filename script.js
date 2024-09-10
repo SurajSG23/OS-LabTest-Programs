@@ -12,7 +12,7 @@ let copyF = (e) => {
 
 async function Programs() {
     for (let index = 1; index < 25; index++) {
-        let programs = await fetch("http://127.0.0.1:5500/Programs/Programs" + index + ".txt")
+        let programs = await fetch("https://raw.githubusercontent.com/SurajSG23/OS-LabTest-Programs/main/Programs/Programs" + index + ".txt")
         let response = await programs.text();
         document.getElementsByClassName("accordion-body" + index)[0].innerText = response
     }
